@@ -9,8 +9,10 @@ module.exports = {
     extend: {
       fontFamily:{
         Montserrat: "Montserrat",
-      }
+      },
+      
     },
+    
   },
   plugins: [require("tailwind-scrollbar")],
 }

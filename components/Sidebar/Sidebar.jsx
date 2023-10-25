@@ -4,10 +4,16 @@ import {motion} from 'framer-motion'
 // react-icons
 import { IoIosArrowBack } from "react-icons/io";
 import { SlSettings } from "react-icons/sl";
-import { AiOutlineAppstore } from "react-icons/ai";
-import { BsPerson } from "react-icons/bs";
-import { HiOutlineDatabase } from "react-icons/hi";
-import { TbReportAnalytics } from "react-icons/tb";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+import { TbFileInvoice} from "react-icons/tb";
+import { MdOutlineBusinessCenter } from "react-icons/md";
+import { IoPeopleOutline } from "react-icons/io5";
+import { MdPeopleOutline } from "react-icons/md";
+import { BsBoxSeam } from "react-icons/bs";
+import { BiPurchaseTagAlt } from "react-icons/bi";
+import { AiOutlineDollar } from "react-icons/ai";
+import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiBuilding3Line } from "react-icons/ri";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
@@ -19,11 +25,13 @@ const Sidebar = () => {
 
   let isTab = useMediaQuery({ query: "(max-width: 768px)" });
   const [isOpen , setIsOpen] = useState(isTab ? false : true)
+  const [val , setVal] = useState('')
+  const [isHover , setIsHover] = useState(false)
 
   const Sidebar_animation = isTab ? {
     open: {
       x:0,
-      width: "16rem",
+      width: "14rem",
       transition: {
         damping:40,
       },
@@ -39,7 +47,7 @@ const Sidebar = () => {
     
   } : {
     open: {
-      width: "16rem",
+      width: "14rem",
       transition: {
         damping:40,
       },
@@ -64,16 +72,98 @@ const Sidebar = () => {
  
   const subMenusList = [
     {
-      name:"build",
-      icon: RiBuilding3Line,
-      menus:["auth","app settings","storage","hosting"],
+      name:"menu",
+      icon: 0,
+      menus:["Dashboard","Invoice","Quotation"],
     },{
-      name:"analytics",
-      icon: TbReportAnalytics,
-      menus:["dashboard","realtime","events"],
+      name:"management",
+      icon: 0,
+      menus:["Business","Employee","Customer","Product","Purhase","Payment"],
+    },{
+      name:"notifications",
+      icon: 0,
+      menus:["Billl Notification"]
     }
   ]
 
+  const leftMenu = [
+    {
+      label:"Menu",
+      menus:[
+        {
+          icon:LuLayoutDashboard ,
+          name:"Dashboard",
+          link:"/Dashboard"
+        },
+        {
+          icon:LiaFileInvoiceDollarSolid ,
+          name:"Invoice",
+          link:"/Invoice"
+        },
+        {
+          icon:TbFileInvoice,
+          name:"Quotation",
+          link:"/Quotation"
+        }
+      ]
+    },
+    {
+      label:"Management",
+      class:"pt-5",
+      menus:[
+        {
+          icon:MdOutlineBusinessCenter ,
+          name:"Business",
+          link:"/Business"
+        },
+        {
+          icon:IoPeopleOutline ,
+          name:"Employee",
+          link:"/Employee"
+        },
+        {
+          icon:MdPeopleOutline,
+          name:"Customer",
+          link:"/Customer"
+        },
+        {
+          icon: BsBoxSeam,
+          name:"Product",
+          link:"/Product"
+        },
+        {
+          icon: BiPurchaseTagAlt,
+          name:"Purchase",
+          link:"/Purchase"
+        },
+        {
+          icon:AiOutlineDollar,
+          name:"Payment",
+          link:"/Payment"
+        },
+      ]
+    },
+    {
+      label:"Notification",
+      class:"pt-5",
+      menus:[
+        {
+          icon:IoMdNotificationsOutline ,
+          name:"Bill Notification",
+          link:"/Notification"
+        },
+      ]
+    },
+    
+  ]
+  
+
+  const handle = (e ,i) =>{
+    //router.push(e)
+    setVal(i)
+  }
+
+ 
 
   return (
     <div>
@@ -83,41 +173,24 @@ const Sidebar = () => {
       <motion.div 
       variants={Sidebar_animation}
       initial={{x: isTab ? -250 : 0}}
-      animate={isOpen? "open" : "closed"}
-      className='bg-white text-gray shadow-xl z-[999] w-[16rem] max-w-[16rem] h-screen overflow-hidden md:relative fixed '>
+      animate={isOpen? "open" : "closed" }
+      className='bg-[#1A3A57] text-gray shadow-xl z-[999] w-[14rem] max-w-[14rem] h-screen overflow-hidden md:relative fixed ' >
         {/*****Logo*****/}
-        <div className='flex items-center gap-.5 font-medium border-b border-slate-300 py-3 mx-3'>
-          <img src='https://freepngimg.com/download/anime/10-2-anime-png-images.png' alt=".." width={45}/>
-          <span className='text-xl whitespace-pre'>Anime</span>
+        {/* border-b border-slate-300 flex items-center gap-.5 font-medium */}
+        <div className={`pt-5 mx-3 ${isOpen === true ? "px-3" : ""}`}>
+          <img src='/Untitled-1.png' alt=".." width-auto/>
+          {/*<span className='text-xl whitespace-pre'>Anime</span>*/}
         </div>
         {/*****Menus*****/}
         <div className='flex flex-col h-full'>
-          {/*first*/}
-          <ul className='whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1 font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white
-           scrollbar-thumb-slate-100 h-[70%] md:h-[68%]'>
+          {/*first   px-2.5*/}
+          <ul className='whitespace-pre  text-[0.9rem] py-5 flex flex-col gap-1 font-medium overflow-x-hidden scrollbar-thin scrollbar-track-[#1A3A57] 
+           scrollbar-thumb-[#1A3A57]  h-[70%] md:h-[68%]'>
           
-                <li>
-                  <div className='link active' onClick={() => router.push("/AllApps")}>
-                    <AiOutlineAppstore size={23} className='min-w-max'/>
-                    AllApps
-                    </div>
-                </li>
-                <li>
-                  <div className='link ' onClick={() => router.push("/Authentication")}>
-                    < BsPerson size={23} className='min-w-max'/>
-                    Authentication
-                    </div>
-                </li>
-                <li>
-                  <div className='link ' onClick={() => router.push("/Storage")}>
-                    < HiOutlineDatabase size={23} className='min-w-max'/>
-                    Storage
-                    </div>
-                </li>
-                {
+                {/*{
                   (isOpen || isTab) && (
                     <div className='border-y py-5 border-slate-300'>
-                    <small className='pl-3 text-slate-500 inline-block mb-2'>Product categories</small>
+                    <small className='pl-3 text-slate-500 inline-block mb-2'>Menu</small>
                     {
                       subMenusList?.map((menu)=>{
                         return(
@@ -130,16 +203,35 @@ const Sidebar = () => {
                    
                   </div>
                   )
-                }
+                }*/}
 
-               
-
-                <li>
-                  <div className='link active' onClick={() => router.push("/Setting")}>
-                    < SlSettings size={23} className='min-w-max'/>
-                    Setting
-                    </div>
-                </li>
+              {
+                leftMenu?.map((inv,i)=>{
+                  return(
+                    <li key={i}>
+                       {
+                        (isOpen || isTab) && ( 
+                          <div className={`pl-[10px] text-white ${inv.class}`}>
+                            {inv.label}
+                          </div>
+                        )
+                      }
+                      {
+                        inv.menus.map((ine,v)=>{
+                          return(
+                            <div key={v} className={`link  ${val === ine.link ? "active" : ""} ${val === ine.link? "text-red-500" : "text-white"}`} onClick={()=>handle(ine.link , ine.link)}>
+                                < ine.icon size={23} className='min-w-max'/>
+                                {ine.name}
+                            </div>
+                          )
+                        })
+                      }
+                      
+                    </li>
+                  )
+                })
+              }    
+              
            
            {/*second*/}
            {
@@ -167,17 +259,17 @@ const Sidebar = () => {
             y: 0,
           } : {
             x: -10,
-            y: -200,
+            y: -10,
             rotate: 180,
           }
         }
      
         onClick={()=>setIsOpen(!isOpen)} className='absolute w-fit h-fit z-50 right-2 bottom-5 cursor-pointer md:block hidden'>
-          <IoIosArrowBack size={25}/>
+          <IoIosArrowBack color="white" size={25}/>
         </motion.div>
       </motion.div>
-      <div className='m-3 md:hidden' onClick={()=>setIsOpen(true)}>
-        <MdMenu size={25}/>
+      <div className='m-3 md:hidden ' onClick={()=>setIsOpen(true)}>
+        <MdMenu  size={25} />
       </div>
     </div>
   )
