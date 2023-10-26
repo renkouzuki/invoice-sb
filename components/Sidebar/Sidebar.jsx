@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import {motion} from 'framer-motion'
 
 // react-icons
@@ -17,16 +17,18 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiBuilding3Line } from "react-icons/ri";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
-import { useRouter } from 'next/router';
 import Submenu from './Submenu';
+import { useRouter } from 'next/router';
+import NavarTop from '../Layout/NavarTop';
 
-const Sidebar = () => {
-  const router = useRouter()
+const Sidebar = (props) => {
 
   let isTab = useMediaQuery({ query: "(max-width: 768px)" });
+  let isPhone = useMediaQuery({ query: "(max-width: 400px)" });
   const [isOpen , setIsOpen] = useState(isTab ? false : true)
   const [val , setVal] = useState('')
-  const [isHover , setIsHover] = useState(false)
+
+  const router = useRouter()
 
   const Sidebar_animation = isTab ? {
     open: {
@@ -67,7 +69,12 @@ const Sidebar = () => {
     } else{
       setIsOpen(true)
     }
-  },[isTab])
+    if(isPhone){
+      setIsOpen(false)
+    } else{
+      setIsOpen(true)
+    }
+  },[isTab,isPhone])
 
  
   const subMenusList = [
@@ -93,7 +100,7 @@ const Sidebar = () => {
         {
           icon:LuLayoutDashboard ,
           name:"Dashboard",
-          link:"/Dashboard"
+          link:"/"
         },
         {
           icon:LiaFileInvoiceDollarSolid ,
@@ -159,14 +166,17 @@ const Sidebar = () => {
   
 
   const handle = (e ,i) =>{
-    //router.push(e)
+    router.push(e)
     setVal(i)
   }
 
  
 
   return (
-    <div>
+    <Fragment>
+      <div className='flex gap-5'>
+        {/********sidebar*********/}
+        <div>
       <div onClick={()=>setIsOpen(false)} className={`md:hidden fixed inset-0 max-h-screen z-[998] bg-black/50 ${isOpen ? "block" : "hidden"}`}>
 
       </div>
@@ -178,7 +188,7 @@ const Sidebar = () => {
         {/*****Logo*****/}
         {/* border-b border-slate-300 flex items-center gap-.5 font-medium */}
         <div className={`pt-5 mx-3 ${isOpen === true ? "px-3" : ""}`}>
-          <img src='/Untitled-1.png' alt=".." width-auto/>
+          <img src='/Untitled-1.png' alt=".." className='width:100% height:auto' />
           {/*<span className='text-xl whitespace-pre'>Anime</span>*/}
         </div>
         {/*****Menus*****/}
@@ -234,20 +244,7 @@ const Sidebar = () => {
               
            
            {/*second*/}
-           {
-            isOpen && <div className='flex-1 text-sm z-50 max-h-48 my-auto
-            whitespace-spre w-full font-medium'>
-              <div className='flex items-center justify-between border-y border-slate-300 p-4'>
-                  <div>
-                    <p>Hellow! ^^</p>
-                    <small>Git:Renko_Uzuki</small>
-                  </div>
-                  <p className='text-teal-500 py-1.5 px-3 text-xs bg-teal-50 rounded-xl'>
-                    Link
-                  </p>
-                </div>
-            </div>
-           }
+           
           </ul>
         </div>
 
@@ -268,10 +265,26 @@ const Sidebar = () => {
           <IoIosArrowBack color="white" size={25}/>
         </motion.div>
       </motion.div>
-      <div className='m-3 md:hidden ' onClick={()=>setIsOpen(true)}>
+      
+      {/*<div className='m-3 md:hidden ' onClick={()=>setIsOpen(true)}>
         <MdMenu  size={25} />
-      </div>
+      </div>*/}
     </div>
+        {/********sidebar*********/}
+        <div>
+          <motion.nav
+          initial={false}
+          animate={isOpen ? "open" : "closed"}
+          custom="100%"
+          >
+            {""}
+            <NavarTop toggle={()=>setIsOpen(!isOpen)}/>
+          </motion.nav>
+          <main>{props.children}</main>
+        </div>
+      </div>
+    </Fragment>
+    
   )
 }
 

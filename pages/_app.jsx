@@ -1,10 +1,11 @@
-import Layout from '@/components/Layout/Layout'
+
+import Sidebar from '@/components/Sidebar/Sidebar'
 import '@/styles/globals.css'
 
 export default function App({ Component, pageProps }) {
   return(
-    <Layout>
+    <Sidebar>
        <Component {...pageProps} />
-    </Layout>
+    </Sidebar>
   )
 }
