@@ -27,6 +27,7 @@ const Sidebar = (props) => {
   let isPhone = useMediaQuery({ query: "(max-width: 400px)" });
   const [isOpen , setIsOpen] = useState(isTab ? false : true)
   const [val , setVal] = useState('')
+  
 
   const router = useRouter()
 
@@ -170,6 +171,7 @@ const Sidebar = (props) => {
     setVal(i)
   }
 
+
  
 
   return (
@@ -271,7 +273,7 @@ const Sidebar = (props) => {
       </div>*/}
     </div>
         {/********sidebar*********/}
-        <div>
+        <div className='w-full'>
           <motion.nav
           initial={false}
           animate={isOpen ? "open" : "closed"}
